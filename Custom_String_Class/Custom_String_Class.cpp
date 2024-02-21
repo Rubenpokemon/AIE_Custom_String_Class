@@ -1,20 +1,24 @@
-// Custom_String_Class.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
 #include <iostream>
+#include "String.h"
+
+using namespace std;
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    String* String_Class_01 = new String;
+    char Text_01[20] = "ABCTesting";
+    String_Class_01->Set_Text(Text_01);
+
+    String* String_Class_02 = new String;
+    char Text_02[20] = "Test";
+    String_Class_02->Set_Text(Text_02);
+
+    String* String_Class_03 = new String;
+    char Text_03[20] = "Work";
+    String_Class_03->Set_Text(Text_03);
+
+    String_Class_01->Replace(*String_Class_02, *String_Class_03);
+    String_Class_01->Replace(*String_Class_02, *String_Class_03);
+    cout << String_Class_01->Text << endl;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

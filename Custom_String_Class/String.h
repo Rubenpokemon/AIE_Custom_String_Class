@@ -7,12 +7,15 @@ class String
 public:
 	String();
 	String(const char* _str);
-
 	String(const String& _other);
 
 	~String();
 
+
 public:
+
+	void Set_Text(const char* Input);
+
 	size_t Length() const;
 	char& CharacterAt(size_t _index);
 	const char& CharacterAt(size_t _index) const;
@@ -43,6 +46,11 @@ public:
 
 	char& operator[](size_t _index);
 	const char& operator[](size_t _index) const;
+
+
+public:
+	char Text[100];
+
 
 private:
 	/*
