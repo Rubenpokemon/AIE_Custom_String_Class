@@ -204,21 +204,24 @@ String& String::Replace(const String& _find, const String& _replace)
 			Key_Num++; //Check The Next Letter
 			Correct_In_Row++;
 			if (Correct_In_Row == strlen(_find.Text)) { //If Found The Whole Word
+
 				//cout << "Found Full Word, Starting With Letter: " << First_Index << endl;
-				for (int i = First_Index; i < strlen(_replace.Text)+First_Index; i++) {
-					cout << "Starting Letter: " << Text[First_Index+i] << endl;
-					Text[First_Index + i] = _replace.Text[i];
+				for (int x = 0; x < strlen(_replace.Text); x++) {
+					cout << x << ") Replacing, " << Text[First_Index+x] << " With" << _replace.Text[x] << endl;
+					Text[First_Index + x] = _replace.Text[x];
 				}
+				Found_Word = true;
 				break;
 			}
 		}
 		else { // Reset Search
 			Key_Num = 0;
 			Correct_In_Row = 0;
+			First_Index = -1;
 		}
 	}
 
-	//if (Found_Word == true){ Replace(_find, _replace); }
+	if (Found_Word == true){ Replace(_find, _replace); } //Redo Function Until No More Words Found
 
 	return *this;
 }

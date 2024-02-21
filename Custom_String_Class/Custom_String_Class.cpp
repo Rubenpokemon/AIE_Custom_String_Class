@@ -7,7 +7,7 @@ using namespace std;
 int main()
 {
     String* String_Class_01 = new String;
-    char Text_01[20] = "ABCTesting";
+    char Text_01[100] = "This Is Testing RN";
     String_Class_01->Set_Text(Text_01);
 
     String* String_Class_02 = new String;
@@ -18,7 +18,6 @@ int main()
     char Text_03[20] = "Work";
     String_Class_03->Set_Text(Text_03);
 
-    String_Class_01->Replace(*String_Class_02, *String_Class_03);
     String_Class_01->Replace(*String_Class_02, *String_Class_03);
     cout << String_Class_01->Text << endl;
 }
