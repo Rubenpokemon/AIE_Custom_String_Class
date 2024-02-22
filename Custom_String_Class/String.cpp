@@ -19,24 +19,31 @@ String::String(const String& _other)
 
 String::~String()
 {
+	delete Text;
 }
 
 void String::Set_Text(const char* Input)
 {
+	strcpy_s(Starting_Text, 100, Input);
 	strcpy_s(Text, 100, Input);
+}
+
+void String::Reset_Text()
+{
+	strcpy_s(Text, 100, Starting_Text);
 }
 
 // Returns an integer representing the count of characters up to the null termination character
 size_t String::Length() const
 {
 	cout << Text <<", Has " << strlen(Text) << " Letters." << endl;
-	return size_t();
+	return strlen(Text);
 }
 
 //Returns a char representing the character at the location. If index is less than 0 or greater than length, return '\0'	
 char& String::CharacterAt(size_t _index)
 {
-	cout << "Character At " << _index << ", " << Text[_index] << endl;
+	cout << "Character At Index " << _index << ", " << Text[_index] << endl;
 	return Text[_index];
 }
 
@@ -72,18 +79,21 @@ String& String::Append(const String& _str)
 ////Adds str to the beginning of the string
 String& String::Prepend(const String& _str)
 {
-	cout << "1) " << _str.Text << endl;
+
 	char Temp[100] = "";
 	strcat_s(Temp, 100, _str.Text);
-	cout << "2) " << Temp << endl;
+	strcat_s(Temp, 100, " "); // Add Space
 	strcat_s(Temp, 100, Text);
-	cout << "3) " << Temp << endl;
-
 
 	Text[0] =  '\0';
 	strcat_s(Text, 100, Temp);
 
 	return *this;
+}
+
+const char* String::CStr() const
+{
+	return Text;
 }
 
 
@@ -101,7 +111,6 @@ String& String::ToLower()
 		if (Text[i] >= 65 && Text[i] <= 90) {
 			Text[i] += 32;
 		}
-		cout << Text[i] << " ";
 	}
 	return *this;
 }
@@ -114,7 +123,6 @@ String& String::ToUpper()
 		if (Text[i] >= 97 && Text[i] <= 122) {
 			Text[i] -= 32;
 		}
-		cout << Text[i] << " ";
 	}
 	return *this;
 }
@@ -123,6 +131,7 @@ String& String::ToUpper()
 ////Returns the location of the findString. If not found, return -1
 size_t String::Find(const String& _str)
 {
+	if (Text == _str.Text) { return 0; }
 	int Key_Num = 0;
 	int Correct_In_Row = 0;
 
@@ -136,7 +145,6 @@ size_t String::Find(const String& _str)
 			Key_Num++; //Check The Next Letter
 			Correct_In_Row++; 
 			if (Correct_In_Row == strlen(_str.Text)) { //If Found The Whole Word
-				cout << "Found Full Word, Starting With Letter: " << First_Index + 1 << endl;
 				return First_Index;
 			}
 
@@ -144,10 +152,10 @@ size_t String::Find(const String& _str)
 		else { // Reset Search
 			Key_Num = 0;
 			Correct_In_Row = 0;
+			First_Index = -1;
 		}
 	}
 
-	cout << "Didn't Find Full Word" << endl;
 	return -1;
 }
 
@@ -168,7 +176,6 @@ size_t String::Find(size_t _startIndex, const String& _str)
 			Key_Num++;
 			Correct_In_Row++;
 			if (Correct_In_Row == strlen(_str.Text)) {
-				cout << "Found Full Word, Starting With Letter: " << First_Index + 1 << endl;
 				return First_Index;
 			}
 
@@ -176,15 +183,14 @@ size_t String::Find(size_t _startIndex, const String& _str)
 		else {
 			Key_Num = 0;
 			Correct_In_Row = 0;
+			First_Index = -1;
 		}
 	}
-
-	cout << "Didn't Find Full Word" << endl;
 	return -1;
 }
 
 
-////Replaces all occurrences of findString with replaceString
+//Replaces all occurrences of findString with replaceString
 String& String::Replace(const String& _find, const String& _replace)
 {
 
@@ -207,7 +213,7 @@ String& String::Replace(const String& _find, const String& _replace)
 
 				//cout << "Found Full Word, Starting With Letter: " << First_Index << endl;
 				for (int x = 0; x < strlen(_replace.Text); x++) {
-					cout << x << ") Replacing, " << Text[First_Index+x] << " With" << _replace.Text[x] << endl;
+					//cout << x << ") Replacing, " << Text[First_Index+x] << " With" << _replace.Text[x] << endl;
 					Text[First_Index + x] = _replace.Text[x];
 				}
 				Found_Word = true;
@@ -225,45 +231,87 @@ String& String::Replace(const String& _find, const String& _replace)
 
 	return *this;
 }
-//
-////Wait for input in the console window and store the result
-//String& String::ReadFromConsole()
-//{
-//	// TODO: insert return statement here
-//}
-//
-////Write the string to the console window
-//String& String::WriteToConsole()
-//{
-//	// TODO: insert return statement here
-//}
-//
-////Returns true if lhs == rhs.
-//bool String::operator==(const String& _other)
-//{
-//	return false;
-//}
-//
-////Returns true if lhs != rhs.
-//bool String::operator!=(const String& _other)
-//{
-//	return false;
-//}
-//
-////Replaces the characters in lhs with the characters in rhs.
-//String& String::operator=(const String& _str)
-//{
-//	// TODO: insert return statement here
-//}
-//
-////Returns the character located at position n.
-//char& String::operator[](size_t _index)
-//{
-//	// TODO: insert return statement here
-//}
-//
-////Returns the character located at position n.
-//const char& String::operator[](size_t _index) const
-//{
-//	// TODO: insert return statement here
-//}
+
+//Wait for input in the console window and store the result
+String& String::ReadFromConsole()
+{
+	char Temp[100];
+	cin >> Temp;
+	strcpy_s(Text, 100, Temp);
+
+	return *this;
+}
+
+//Write the string to the console window
+String& String::WriteToConsole()
+{
+	cout << Text << endl;
+	return *this;
+}
+
+//Returns true if lhs == rhs.
+bool String::operator == (const String& _other)
+{
+	if (strcmp(Text, _other.Text) == 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
+
+	//for (int i = 0; i < strlen(Text); i++) {
+	//	if (Text[i] != _other.Text[i]) {
+	//		return false;
+	//	}
+
+	//}
+	//return true;
+
+}
+
+//Returns true if lhs != rhs.
+bool String::operator!=(const String& _other)
+{
+	if (strcmp(Text, _other.Text) == 0) {
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+bool String::operator<(const String& _other)
+{
+	if (this->Text < _other.Text) {
+		return true;
+	}
+	return false;
+}
+
+//Replaces the characters in lhs with the characters in rhs.
+String& String::operator=(const String& _str)
+{
+	strcpy_s(Text, 100, _str.Text);
+	return *this;
+}
+
+//Returns the character located at position n.
+char& String::operator >> (size_t _index)
+{
+	return Text[_index];
+}
+
+//Returns the character located at position n.
+char& String::operator [] (int _index)
+{
+	cout << "Operator [] Called" << endl;
+	return Text[_index];
+}
+
+const char& String::operator [] (size_t _index) const
+{
+	cout << "Operator [] Called" << endl;
+	return Text[_index];
+}
+
+

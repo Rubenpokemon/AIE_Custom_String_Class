@@ -15,6 +15,7 @@ public:
 public:
 
 	void Set_Text(const char* Input);
+	void Reset_Text(); //Reset Text For Testing
 
 	size_t Length() const;
 	char& CharacterAt(size_t _index);
@@ -42,13 +43,17 @@ public:
 	bool operator==(const String& _other);
 	bool operator!=(const String& _other);
 
+	bool operator < (const String & _other);
+
 	String& operator=(const String& _str);
 
-	char& operator[](size_t _index);
-	const char& operator[](size_t _index) const;
+	char& operator >> (size_t _index);
+	char& operator [] (int _index);
+	const char& operator [](size_t _index) const;
 
 
 public:
+	char Starting_Text[100];
 	char Text[100];
 
 
