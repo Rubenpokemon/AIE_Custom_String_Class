@@ -2,28 +2,39 @@
 #include <iostream>
 #include <ctime>
 #include <fstream>
-#include <string>
+#include <string> //Used For Printing Date
 #include "String.h"
 using namespace std;
 
 void Test();
+void Print_Date();
 
 void WriteFile(const String& File, const String& txt) {
-    cout << "Read File, " << File.CStr() << endl;
     ofstream writefile;
     writefile.open(File.CStr(), fstream::app);
-    writefile << txt.CStr();
+    writefile << txt.CStr() << endl;
     writefile.close();
 }
 
-string ReadFile(string fileName) {
-    string line;
-    ifstream readfile(fileName);
-    if (readfile.is_open()) {
-        getline(readfile, line);
-        readfile.close();
-    }
-    return line;
+void WriteFile(const String& File, const char& txt, bool new_l) {
+    ofstream writefile;
+    writefile.open(File.CStr(), fstream::app);
+    writefile << txt;
+    if (new_l) { writefile << endl; }
+    writefile.close();
+}
+
+void WriteFile(const String& File, string txt, bool new_l) {
+    ofstream writefile;
+    writefile.open(File.CStr(), fstream::app);
+    writefile << txt;
+    if (new_l) { writefile << endl; }
+    writefile.close();
+}
+
+void OpenFile(const String& File) {
+    ofstream writefile;
+    writefile.open(File.CStr(), fstream::app);
 }
 
 //void WriteFile(string fileName, string txt) {
@@ -43,51 +54,71 @@ string ReadFile(string fileName) {
 //    return line;
 //}
 
+String* File = new String();
+
 int main()
 {
-    // Print Time
-   /* time_t now = time(0);
-    tm* ltm = localtime(&now);
-    char* dt = ctime(&now);
-    cout << ltm->tm_mday << "/" << ltm->tm_mon + 1 << "/" << 1900 + ltm->tm_year << "   Time: " << ltm->tm_hour << ":" << ltm->tm_min << ":" << ltm->tm_sec << endl;*/
-    
-    String* File = new String();
     File->Set_Text("Output.txt");
+    
+    Print_Date();
 
-    String* Test = new String();
-    Test->Set_Text("This Is From A String Class");
 
-    //Test();
-    WriteFile(*File, *Test);
-    //WriteFile("Output.txt", "SecondLineOfText\n");
-    //WriteFile("Output.txt", "THIRD\n");
-    //cout << ReadFile("Output.txt") << endl;
+    Test();
+    //WriteFile(*File, *Test);
 }
 
+
+//{ofstream writefile;
+//writefile.open("Output.txt", fstream::app);
+//writefile << endl;
+//writefile.close(); }
+
 void Test() {
+
+    ofstream writefile; //Open File
+    writefile.open("Output.txt", fstream::app);
+
     //Set First Word
     String* Str01 = new String;
     Str01->Set_Text("Hello");
 
     //Set Second Word
     String* Str02 = new String;
-    Str02->Set_Text("World");
+    Str02->Set_Text("Hello");
 
 
     //Print Words
-    cout << "Word 1'" << Str01->Text << "' Word 2'" << Str02->Text << endl;
+    std::cout << "Word 1'" << Str01->Text << "' Word 2'" << Str02->Text << endl;
 
 
     //Test Length
-    cout << Str01->CStr() << ", Has " << Str01->Length() << " Letters." << endl;
-
+    std::cout << Str01->CStr() << ", Has " << Str01->Length() << " Letters." << endl;
+    writefile << "Test 1 Length | " << Str01->CStr() << ", Has " << Str01->Length() << " Letters." << "," << endl;
+    //writefile.close(); 
+    
+    // ! Open And Close File Here Instead Of Multiple Functions ! \\
+    //WriteFile(*File, "Length Test) ", false);
+    //WriteFile(*File, Str01->CStr(), false);
+    //WriteFile(*File, " Has ", false);
+    //WriteFile(*File, to_string(Str01->Length()),false);
+    //WriteFile(*File, " Letters.", true);
 
     //Character At Test
-    cout << "Character At Index " << 2 << ", " << Str01->CharacterAt(2) << endl;
+   // ofstream writefile;
+    //writefile.open("Output.txt", fstream::app);
+    writefile << "Test 2 CharacterAt | " << Str01->CharacterAt(2) << ", Is In Index " << 2 <<  endl;
+  
+
 
     //EqualTo Test
-    if (Str01->EqualTo(*Str02)) { cout << Str01->Text << " Is Equal To " << Str02->Text << endl; }
-    else { cout << Str01->Text <<" Is Not Equal To "<< Str02->Text << endl; }
+    if (Str01->EqualTo(*Str02)) { 
+        writefile << "Test 3 EqualTo |  " << Str01->Text << " Is Equal To " << Str02->Text <<  endl; 
+    }
+    else { 
+        writefile << "Test 3 EqualTo |  " << Str01->Text << " Is Not Equal To " << Str02->Text <<  endl;
+    }
+ 
+
 
     //Append Test
     Str01->Append(*Str02);
@@ -127,7 +158,7 @@ void Test() {
     Str04->Set_Text("bye");
 
     Str01->Replace(*Str03, *Str04);
-    cout << "Replaced, " << Str04->Text << " With " << Str03->Text << " -> " << Str01->Text << endl;
+    cout << "Replaced, " << Str03->Text << " With " << Str04->Text << " -> " << Str01->Text << endl;
 
     // == Test
     Str01->Reset_Text();
@@ -151,6 +182,10 @@ void Test() {
     Str01 = Str02;
     cout << Str01->CStr() << " Is Now Equal To " << Str02->Text << endl;
 
+    WriteFile(*File, " ", true);
+    WriteFile(*File, " ", true);
+    WriteFile(*File, " ", true);
+    writefile.close();
     //Read From Console Test
     cout << "Read From Console: ";
     Str01->ReadFromConsole();
@@ -161,3 +196,24 @@ void Test() {
 }
 
 
+void Print_Date() {
+    time_t now = time(0);
+    tm* ltm = localtime(&now);
+    char* dt = ctime(&now);
+    cout << ltm->tm_mday << "/" << ltm->tm_mon + 1 << "/" << 1900 + ltm->tm_year << "   Time: " << ltm->tm_hour << ":" << ltm->tm_min << ":" << ltm->tm_sec << endl;
+
+    {
+        WriteFile(*File, to_string(ltm->tm_mday), false);
+        WriteFile(*File, *"/", false);
+        WriteFile(*File, to_string(ltm->tm_mon + 1), false);
+        WriteFile(*File, *"/", false);
+        WriteFile(*File, to_string(1900 + ltm->tm_year), false);
+        WriteFile(*File, *"   Time: ", false);
+        WriteFile(*File, to_string(ltm->tm_hour), false);
+        WriteFile(*File, *":", false);
+        WriteFile(*File, to_string(ltm->tm_min), false);
+        WriteFile(*File, *":", false);
+        WriteFile(*File, to_string(ltm->tm_sec), false);
+        WriteFile(*File, *" ", true);
+    }
+}

@@ -243,6 +243,8 @@ String& String::WriteToConsole()
 	return *this;
 }
 
+
+
 //Returns true if lhs == rhs.
 bool String::operator == (const String& _other)
 {

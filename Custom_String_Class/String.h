@@ -39,6 +39,7 @@ public:
 	String& ReadFromConsole();
 	String& WriteToConsole();
 
+
 public:
 	bool operator==(const String& _other);
 	bool operator!=(const String& _other);
