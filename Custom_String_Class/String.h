@@ -47,20 +47,15 @@ public:
 
 	String& operator=(const String& _str);
 
-	char& operator >> (size_t _index);
-	char& operator [] (int _index);
-	const char& operator [](size_t _index) const;
+	char& operator >> (size_t _index); //Replaced [] With >>
+	const char& operator >>(size_t _index) const;
 
 
 public:
-	char Starting_Text[100];
 	char Text[100];
 
-
 private:
-	/*
-	* Put your internal data structures and members here
-	*/
+	char Starting_Text[100];
 };
 
 #endif

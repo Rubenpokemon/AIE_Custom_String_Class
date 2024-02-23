@@ -42,7 +42,7 @@ size_t String::Length() const
 //Returns a char representing the character at the location. If index is less than 0 or greater than length, return '\0'	
 char& String::CharacterAt(size_t _index)
 {
-	if (_index <0 || _index > Length()) {
+	if (_index <0 || _index > Length()) { //If < 0 Or > Length, Return 0(\0)
 		static char s = 0;
 		return s; 
 	}
@@ -52,7 +52,7 @@ char& String::CharacterAt(size_t _index)
 //Returns a char representing the character at the location. If index is less than 0 or greater than length, return '\0'	
 const char& String::CharacterAt(size_t _index) const
 {
-	if (_index <0 || _index > Length()) {
+	if (_index <0 || _index > Length()) { //If < 0 Or > Length, Return 0(\0)
 		static char s = 0;
 		return s;
 	}
@@ -62,22 +62,18 @@ const char& String::CharacterAt(size_t _index) const
 ////Returns true if str contains the same characters.
 bool String::EqualTo(const String& _other) const
 {
-	//cout << "Other Text: " << _other.Text << endl;
-	//cout << Text << " " << _other.Text << endl;
-
-	for (int i = 0; i < strlen(Text); i++) {
-		if (Text[i] != _other.Text[i]) {
-			return false;
-		}
-
+	if (strcmp(Text, _other.Text) == 0) {
+		return true;
 	}
-	return true;
+	else {
+		return false;
+	}
 }
 
 ////Adds str to the end of the string
 String& String::Append(const String& _str)
 {
-	strcat_s(Text, 100, " ");
+	strcat_s(Text, 100, " "); //Add Space Between Words
 	strcat_s(Text, 100, _str.Text);
 	return *this;
 }
@@ -87,35 +83,30 @@ String& String::Prepend(const String& _str)
 {
 
 	char Temp[100] = "";
-	strcat_s(Temp, 100, _str.Text);
+	strcat_s(Temp, 100, _str.Text); //Set Temp To Input Word
 	strcat_s(Temp, 100, " "); // Add Space
-	strcat_s(Temp, 100, Text);
+	strcat_s(Temp, 100, Text); //Add Starting Word To Temp
 
-	Text[0] =  '\0';
-	strcat_s(Text, 100, Temp);
+	Text[0] =  '\0'; //Reset Text
+	strcat_s(Text, 100, Temp);//Set Text To Temp
 
 	return *this;
 }
 
+
+////Return the const char * that is useable with std::cout. eg: std::cout << str.cstr() << std::endl;
 const char* String::CStr() const
 {
 	return Text;
 }
-
-
-////Return the const char * that is useable with std::cout. eg: std::cout << str.cstr() << std::endl;
-//const char* String::CStr() const
-//{
-//	return Text;
-//}
  
 
 ////Convert all characters to lowercase
 String& String::ToLower()
 {
-	for (int i = 0; i < strlen(Text); i++) {
-		if (Text[i] >= 65 && Text[i] <= 90) {
-			Text[i] += 32;
+	for (int i = 0; i < strlen(Text); i++) { //For Each Letter
+		if (Text[i] >= 65 && Text[i] <= 90) { //If Letter Is Lowercase In Ascii
+			Text[i] += 32; //Add 32 To Make It A Capital Letter
 		}
 	}
 	return *this;
@@ -125,9 +116,9 @@ String& String::ToLower()
 ////Convert all characters to uppercase
 String& String::ToUpper()
 {
-	for (int i = 0; i < strlen(Text); i++) {
-		if (Text[i] >= 97 && Text[i] <= 122) {
-			Text[i] -= 32;
+	for (int i = 0; i < strlen(Text); i++) { //For Each Letter
+		if (Text[i] >= 97 && Text[i] <= 122) {//If Letter Is Uppercase In Ascii
+			Text[i] -= 32;//Substract 32 To Make It A Lowercase Letter
 		}
 	}
 	return *this;
@@ -149,7 +140,7 @@ size_t String::Find(const String& _str)
 				First_Index = i;
 			}
 			Key_Num++; //Check The Next Letter
-			Correct_In_Row++; 
+			Correct_In_Row++; //Correct Letters In A Row
 			if (Correct_In_Row == strlen(_str.Text)) { //If Found The Whole Word
 				return First_Index;
 			}
@@ -175,18 +166,18 @@ size_t String::Find(size_t _startIndex, const String& _str)
 	int First_Index = -1;
 
 	for (int i = _startIndex; i < strlen(Text); i++) {
-		if (Text[i] == _str.Text[Key_Num]) {
-			if (First_Index == -1) {
-				First_Index = i;
+		if (Text[i] == _str.Text[Key_Num]) { // For Letters In Text
+			if (First_Index == -1) { // If Current Letter = First Letter Of Search Word
+				First_Index = i; // Set Starting Spot For The Word
 			}
-			Key_Num++;
-			Correct_In_Row++;
-			if (Correct_In_Row == strlen(_str.Text)) {
+			Key_Num++; //Check The Next Letter
+			Correct_In_Row++; //Correct Letters In A Row
+			if (Correct_In_Row == strlen(_str.Text)) { //If Found The Whole Word
 				return First_Index;
 			}
 
 		}
-		else {
+		else { // Reset Search
 			Key_Num = 0;
 			Correct_In_Row = 0;
 			First_Index = -1;
@@ -216,14 +207,11 @@ String& String::Replace(const String& _find, const String& _replace)
 			Key_Num++; //Check The Next Letter
 			Correct_In_Row++;
 			if (Correct_In_Row == strlen(_find.Text)) { //If Found The Whole Word
-
-				//cout << "Found Full Word, Starting With Letter: " << First_Index << endl;
-				for (int x = 0; x < strlen(_replace.Text); x++) {
-					//cout << x << ") Replacing, " << Text[First_Index+x] << " With" << _replace.Text[x] << endl;
+				for (int x = 0; x < strlen(_replace.Text); x++) {//cout << x << ") Replacing, " << Text[First_Index+x] << " With" << _replace.Text[x] << endl;
 					Text[First_Index + x] = _replace.Text[x];
 				}
 				Found_Word = true;
-				break;
+				break; //End Loop 
 			}
 		}
 		else { // Reset Search
@@ -251,7 +239,7 @@ String& String::ReadFromConsole()
 //Write the string to the console window
 String& String::WriteToConsole()
 {
-	cout << Text << endl;
+	cout << CStr() << endl;
 	return *this;
 }
 
@@ -264,15 +252,6 @@ bool String::operator == (const String& _other)
 	else {
 		return false;
 	}
-
-	//for (int i = 0; i < strlen(Text); i++) {
-	//	if (Text[i] != _other.Text[i]) {
-	//		return false;
-	//	}
-
-	//}
-	//return true;
-
 }
 
 //Returns true if lhs != rhs.
@@ -307,17 +286,11 @@ char& String::operator >> (size_t _index)
 	return Text[_index];
 }
 
-//Returns the character located at position n.
-char& String::operator [] (int _index)
+const char& String::operator>>(size_t _index) const
 {
-	cout << "Operator [] Called" << endl;
 	return Text[_index];
 }
 
-const char& String::operator [] (size_t _index) const
-{
-	cout << "Operator [] Called" << endl;
-	return Text[_index];
-}
+
 
 

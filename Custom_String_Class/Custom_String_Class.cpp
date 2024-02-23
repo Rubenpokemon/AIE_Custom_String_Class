@@ -78,9 +78,9 @@ void Test() {
     Str03->Set_Text("llo");
 
     String* Str04 = new String; //String To Be Replaced With
-    Str04->Set_Text("llo");
+    Str04->Set_Text("bye");
 
-    Str01->Replace(*Str04, *Str03);
+    Str01->Replace(*Str03, *Str04);
     cout << "Replaced, " << Str04->Text << " With " << Str03->Text << " -> " << Str01->Text << endl;
 
     // == Test
