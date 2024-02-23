@@ -1,21 +1,67 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <ctime>
+#include <fstream>
+#include <string>
 #include "String.h"
 using namespace std;
 
 void Test();
 
+void WriteFile(const String& File, const String& txt) {
+    cout << "Read File, " << File.CStr() << endl;
+    ofstream writefile;
+    writefile.open(File.CStr(), fstream::app);
+    writefile << txt.CStr();
+    writefile.close();
+}
+
+string ReadFile(string fileName) {
+    string line;
+    ifstream readfile(fileName);
+    if (readfile.is_open()) {
+        getline(readfile, line);
+        readfile.close();
+    }
+    return line;
+}
+
+//void WriteFile(string fileName, string txt) {
+//    ofstream writefile;
+//    writefile.open(fileName, fstream::app);
+//    writefile << txt;
+//    writefile.close();
+//}
+
+//string ReadFile(string fileName) {
+//    string line;
+//    ifstream readfile(fileName);
+//    if (readfile.is_open()) {
+//        getline(readfile, line);
+//        readfile.close();
+//    }
+//    return line;
+//}
+
 int main()
 {
     // Print Time
-    /*time_t now = time(0);
+   /* time_t now = time(0);
     tm* ltm = localtime(&now);
     char* dt = ctime(&now);
-    cout << ltm->tm_mday << "/" << ltm->tm_mon + 1 << "/" << 1900 + ltm->tm_year << " Time: " << ltm->tm_hour << ":" << ltm->tm_min << ":" << ltm->tm_sec << endl;*/
+    cout << ltm->tm_mday << "/" << ltm->tm_mon + 1 << "/" << 1900 + ltm->tm_year << "   Time: " << ltm->tm_hour << ":" << ltm->tm_min << ":" << ltm->tm_sec << endl;*/
     
+    String* File = new String();
+    File->Set_Text("Output.txt");
 
-    Test();
+    String* Test = new String();
+    Test->Set_Text("This Is From A String Class");
+
+    //Test();
+    WriteFile(*File, *Test);
+    //WriteFile("Output.txt", "SecondLineOfText\n");
+    //WriteFile("Output.txt", "THIRD\n");
+    //cout << ReadFile("Output.txt") << endl;
 }
 
 void Test() {
