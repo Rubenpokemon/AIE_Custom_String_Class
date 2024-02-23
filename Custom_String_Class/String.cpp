@@ -9,26 +9,26 @@ String::String()
 
 String::String(const char* _str)
 {
-	cout << "Using This Constructor!" << endl;
+	
 }
 
 String::String(const String& _other)
 {
-	cout << "Using Moving Constructor!" << endl;
+	
 }
 
 String::~String()
 {
-	delete Text;
+	
 }
 
-void String::Set_Text(const char* Input)
+void String::Set_Text(const char* Input) //Set Current Text And Defualt Text(For Testing)
 {
 	strcpy_s(Starting_Text, 100, Input);
 	strcpy_s(Text, 100, Input);
 }
 
-void String::Reset_Text()
+void String::Reset_Text() //Reset Current Text To Defualt 
 {
 	strcpy_s(Text, 100, Starting_Text);
 }
@@ -36,22 +36,28 @@ void String::Reset_Text()
 // Returns an integer representing the count of characters up to the null termination character
 size_t String::Length() const
 {
-	cout << Text <<", Has " << strlen(Text) << " Letters." << endl;
 	return strlen(Text);
 }
 
 //Returns a char representing the character at the location. If index is less than 0 or greater than length, return '\0'	
 char& String::CharacterAt(size_t _index)
 {
-	cout << "Character At Index " << _index << ", " << Text[_index] << endl;
+	if (_index <0 || _index > Length()) {
+		static char s = 0;
+		return s; 
+	}
 	return Text[_index];
 }
 
-////Returns a char representing the character at the location. If index is less than 0 or greater than length, return '\0'	
-//const char& String::CharacterAt(size_t _index) const
-//{
-//	// TODO: insert return statement here
-//}
+//Returns a char representing the character at the location. If index is less than 0 or greater than length, return '\0'	
+const char& String::CharacterAt(size_t _index) const
+{
+	if (_index <0 || _index > Length()) {
+		static char s = 0;
+		return s;
+	}
+	return Text[_index];
+}
 
 ////Returns true if str contains the same characters.
 bool String::EqualTo(const String& _other) const
