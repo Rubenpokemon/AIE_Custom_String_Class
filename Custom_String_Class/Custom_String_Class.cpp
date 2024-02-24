@@ -9,51 +9,6 @@ using namespace std;
 void Test();
 void Print_Date();
 
-void WriteFile(const String& File, const String& txt) {
-    ofstream writefile;
-    writefile.open(File.CStr(), fstream::app);
-    writefile << txt.CStr() << endl;
-    writefile.close();
-}
-
-void WriteFile(const String& File, const char& txt, bool new_l) {
-    ofstream writefile;
-    writefile.open(File.CStr(), fstream::app);
-    writefile << txt;
-    if (new_l) { writefile << endl; }
-    writefile.close();
-}
-
-void WriteFile(const String& File, string txt, bool new_l) {
-    ofstream writefile;
-    writefile.open(File.CStr(), fstream::app);
-    writefile << txt;
-    if (new_l) { writefile << endl; }
-    writefile.close();
-}
-
-void OpenFile(const String& File) {
-    ofstream writefile;
-    writefile.open(File.CStr(), fstream::app);
-}
-
-//void WriteFile(string fileName, string txt) {
-//    ofstream writefile;
-//    writefile.open(fileName, fstream::app);
-//    writefile << txt;
-//    writefile.close();
-//}
-
-//string ReadFile(string fileName) {
-//    string line;
-//    ifstream readfile(fileName);
-//    if (readfile.is_open()) {
-//        getline(readfile, line);
-//        readfile.close();
-//    }
-//    return line;
-//}
-
 String* File = new String();
 
 int main()
@@ -68,11 +23,6 @@ int main()
 }
 
 
-//{ofstream writefile;
-//writefile.open("Output.txt", fstream::app);
-//writefile << endl;
-//writefile.close(); }
-
 void Test() {
 
     ofstream writefile; //Open File
@@ -80,140 +30,126 @@ void Test() {
 
     //Set First Word
     String* Str01 = new String;
-    Str01->Set_Text("Hello");
+    cout << " - Enter Word 1 - " << endl;
+    Str01->ReadFromConsole();
+    Str01->Set_Text(Str01->CStr());
 
     //Set Second Word
     String* Str02 = new String;
-    Str02->Set_Text("Hello");
+    cout << " - Enter Word 2 - " << endl;
+    Str02->ReadFromConsole();
+    Str02->Set_Text(Str02->CStr());
 
+    writefile << "Word 1 = " << Str01->CStr() << "  Word 2 = " << Str02->CStr() << endl;
 
     //Print Words
-    std::cout << "Word 1'" << Str01->Text << "' Word 2'" << Str02->Text << endl;
 
 
     //Test Length
-    std::cout << Str01->CStr() << ", Has " << Str01->Length() << " Letters." << endl;
     writefile << "Test 1 Length | " << Str01->CStr() << ", Has " << Str01->Length() << " Letters." << "," << endl;
-    //writefile.close(); 
-    
-    // ! Open And Close File Here Instead Of Multiple Functions ! \\
-    //WriteFile(*File, "Length Test) ", false);
-    //WriteFile(*File, Str01->CStr(), false);
-    //WriteFile(*File, " Has ", false);
-    //WriteFile(*File, to_string(Str01->Length()),false);
-    //WriteFile(*File, " Letters.", true);
+
 
     //Character At Test
-   // ofstream writefile;
-    //writefile.open("Output.txt", fstream::app);
     writefile << "Test 2 CharacterAt | " << Str01->CharacterAt(2) << ", Is In Index " << 2 <<  endl;
   
 
 
     //EqualTo Test
-    if (Str01->EqualTo(*Str02)) { 
-        writefile << "Test 3 EqualTo |  " << Str01->Text << " Is Equal To " << Str02->Text <<  endl; 
-    }
-    else { 
-        writefile << "Test 3 EqualTo |  " << Str01->Text << " Is Not Equal To " << Str02->Text <<  endl;
-    }
+    if (Str01->EqualTo(*Str02)) {  writefile << "Test 3 EqualTo |  " << Str01->Text << " Is Equal To " << Str02->Text <<  endl; }
+    else { writefile << "Test 3 EqualTo |  " << Str01->Text << " Is Not Equal To " << Str02->Text <<  endl; }
  
 
 
     //Append Test
     Str01->Append(*Str02);
-    cout << "Appended Word: " << Str01->CStr() << endl;
+    writefile << "Test 4 Append | " << Str01->CStr() << endl;
+
+
 
     //Prepend Test
     Str01->Reset_Text();
     Str01->Prepend(*Str02);
-    cout << "Prepended Word: " << Str01->CStr() << endl;
+    writefile << "Test 5 Prepend | " << Str01->CStr() << endl;
 
     //ToUpper Test
     Str01->Reset_Text();
     Str01->ToUpper();
-    cout << "Uppercase: " << Str01->CStr() << endl;
+    writefile << "Test 6 Uppercase | " << Str01->CStr() << endl;
 
     //ToLower Test
     Str01->Reset_Text();
     Str01->ToLower();
-    cout << "Lowercase: " << Str01->CStr() << endl;
+    writefile << "Test 7 Lowercase | " << Str01->CStr() << endl;
 
     //Find Test
     Str01->Reset_Text();
     int Temp = Str01->Find(*Str02);
-    if (Temp != -1) { cout << "Found Full Word Starting With Letter, " << Temp + 1 << endl; }
-    else { cout << "Didn't Find Full Word" << endl; }
+    if (Temp != -1) { writefile << "Test 8 Find | Found Full Word Starting With Letter, " << Temp + 1 << endl; }
+    else { writefile << "Test 8 Find | Didn't Find " << Str02->CStr() << " In " << Str01->CStr() << endl; }
 
     //Find Test With Index
     Temp = Str01->Find(3,*Str02);
-    if (Temp != -1) { cout << "Found Full Word Starting With Letter, " << Temp + 1 << " Starting At Letter, "<< 2 << endl; }
-    else { cout << "Didn't Find Full Word" " Starting At Letter, " << 2 << endl; }
+    if (Temp != -1) { writefile << "Test 9 Find(Index) | Found Full Word Starting With Letter, " << Temp + 1 << " Starting At Letter, "<< 2 << endl; }
+    else { writefile << "Test 8 Find(Index) | Didn't Find " << Str02->CStr() << " In " << Str01->CStr() << " Starting At Letter, " << 2 << endl; }
 
     //Replace Test
+    Str01->Reset_Text();
     String* Str03 = new String; //String To Be Replace
-    Str03->Set_Text("llo");
+    Str03->Set_Text("e");
 
     String* Str04 = new String; //String To Be Replaced With
-    Str04->Set_Text("bye");
+    Str04->Set_Text("a");
 
     Str01->Replace(*Str03, *Str04);
-    cout << "Replaced, " << Str03->Text << " With " << Str04->Text << " -> " << Str01->Text << endl;
+    writefile << "Test 10 Replace | Replaced, " << Str03->Text << " With " << Str04->Text << " -> " << Str01->Text << endl;
 
     // == Test
     Str01->Reset_Text();
-    if (*Str01 == *Str02) { cout << "== " << Str01->Text << " And " << Str02->Text << " Are Equal" << endl; }
-    else { cout << "== " << Str01->Text << " And " << Str02->Text << " Are Not Equal" << endl; }
+    if (*Str01 == *Str02) { writefile << "Test 11 == | " << Str01->Text << " And " << Str02->Text << " Are Equal" << endl; }
+    else { writefile << "Test 11 | == " << Str01->Text << " And " << Str02->Text << " Are Not Equal" << endl; }
 
     // != Test
-    if (*Str01 != *Str02) { cout << "!= " << Str01->Text << " And " << Str02->Text << " Are Not Equal" << endl; }
-    else { cout << "!= " << Str01->Text << " And " << Str02->Text << " Are Equal" << endl; }
+    if (*Str01 != *Str02) { writefile << "Test 12 != | " << Str01->Text << " And " << Str02->Text << " Are Not Equal" << endl; }
+    else { writefile << "Test 12 != | " << Str01->Text << " And " << Str02->Text << " Are Equal" << endl; }
 
     // []/>> Test
     char Char_Temp = *Str01 >> 1;
-    cout << Char_Temp << " Is The Second Letter" << endl;
+    writefile << "Test 13 [] | " << Char_Temp << " Is The Second Letter" << endl;
 
     // < Test
     Str01->Reset_Text();
-    if (Str01 < Str02) { cout << Str01->Text << " Comes Before " << Str02->CStr() << " In The Alphabet" << endl;}
-    else { cout << Str01->CStr() << " Doesn't Come Before " << Str02->CStr() << " In The Alphabet" << endl; }
+    if (Str01 < Str02) { writefile << "Test 14 < | " << Str01->Text << " Comes Before " << Str02->CStr() << " In The Alphabet" << endl; }
+    else { writefile << "Test 13 [] | " << Str01->CStr() << " Doesn't Come Before " << Str02->CStr() << " In The Alphabet" << endl; }
 
     // = Test
     Str01 = Str02;
-    cout << Str01->CStr() << " Is Now Equal To " << Str02->Text << endl;
+    writefile << "Test 14 = | " << Str01->CStr() << " Is Now Equal To " << Str02->Text << endl;
+
+    //Read From Console Test
+    cout << "Read From Console: ";
+    Str01->ReadFromConsole();
+    writefile << "Test 15 ReadFromConsole | " << Str01->CStr() << endl;
+
+    //Write To Console Test
+    cout << "\nWriting To Console: ";
+    Str01->WriteToConsole();
 
     WriteFile(*File, " ", true);
     WriteFile(*File, " ", true);
     WriteFile(*File, " ", true);
     writefile.close();
-    //Read From Console Test
-    cout << "Read From Console: ";
-    Str01->ReadFromConsole();
-
-    //Write To Console Test
-    cout << "\nWriting To Console: ";
-    Str01->WriteToConsole();
 }
 
 
 void Print_Date() {
     time_t now = time(0);
     tm* ltm = localtime(&now);
-    char* dt = ctime(&now);
-    cout << ltm->tm_mday << "/" << ltm->tm_mon + 1 << "/" << 1900 + ltm->tm_year << "   Time: " << ltm->tm_hour << ":" << ltm->tm_min << ":" << ltm->tm_sec << endl;
+    char* dt = ctime(&now);//cout << ltm->tm_mday << "/" << ltm->tm_mon + 1 << "/" << 1900 + ltm->tm_year << "   Time: " << ltm->tm_hour << ":" << ltm->tm_min << ":" << ltm->tm_sec << endl;
 
-    {
-        WriteFile(*File, to_string(ltm->tm_mday), false);
-        WriteFile(*File, *"/", false);
-        WriteFile(*File, to_string(ltm->tm_mon + 1), false);
-        WriteFile(*File, *"/", false);
-        WriteFile(*File, to_string(1900 + ltm->tm_year), false);
-        WriteFile(*File, *"   Time: ", false);
-        WriteFile(*File, to_string(ltm->tm_hour), false);
-        WriteFile(*File, *":", false);
-        WriteFile(*File, to_string(ltm->tm_min), false);
-        WriteFile(*File, *":", false);
-        WriteFile(*File, to_string(ltm->tm_sec), false);
-        WriteFile(*File, *" ", true);
-    }
+    ofstream writefile; //Open File
+    writefile.open("Output.txt", fstream::app);
+    writefile << ltm->tm_mday << "/" << ltm->tm_mon + 1 << "/" << 1900 + ltm->tm_year << "   Time: " << ltm->tm_hour << ":" << ltm->tm_min << ":" << ltm->tm_sec << endl;
+
+
+
 }
