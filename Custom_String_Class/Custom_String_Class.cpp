@@ -13,7 +13,7 @@ String* File = new String();
 
 int main()
 {
-    File->Set_Text("Output.txt");
+    File->Set_Text("CustomStringOutput.txt");
     
     Print_Date();
 
@@ -26,7 +26,7 @@ int main()
 void Test() {
 
     ofstream writefile; //Open File
-    writefile.open("Output.txt", fstream::app);
+    writefile.open("CustomStringOutput.txt", fstream::app);
 
     //Set First Word
     String* Str01 = new String;
@@ -147,7 +147,7 @@ void Print_Date() {
     char* dt = ctime(&now);//cout << ltm->tm_mday << "/" << ltm->tm_mon + 1 << "/" << 1900 + ltm->tm_year << "   Time: " << ltm->tm_hour << ":" << ltm->tm_min << ":" << ltm->tm_sec << endl;
 
     ofstream writefile; //Open File
-    writefile.open("Output.txt", fstream::app);
+    writefile.open("CustomStringOutput.txt", fstream::app);
     writefile << ltm->tm_mday << "/" << ltm->tm_mon + 1 << "/" << 1900 + ltm->tm_year << "   Time: " << ltm->tm_hour << ":" << ltm->tm_min << ":" << ltm->tm_sec << endl;
 
 
