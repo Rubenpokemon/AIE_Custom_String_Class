@@ -30,7 +30,6 @@ void String::Set_Text(const char* Input) //Set Current Text And Defualt Text(For
 
 void String::Reset_Text() //Reset Current Text To Defualt 
 {
-	cout << Starting_Text << endl;
 	strcpy_s(Text, 100, Starting_Text);
 }
 

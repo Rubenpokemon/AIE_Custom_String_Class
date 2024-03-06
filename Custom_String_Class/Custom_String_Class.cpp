@@ -90,7 +90,7 @@ void Test() {
     //Find Test With Index
     Temp = Str01->Find(3,*Str02);
     if (Temp != -1) { writefile << "Test 9 Find(Index) | Found Full Word Starting With Letter, " << Temp + 1 << " Starting At Letter, "<< 2 << endl; }
-    else { writefile << "Test 8 Find(Index) | Didn't Find " << Str02->CStr() << " In " << Str01->CStr() << " Starting At Letter, " << 2 << endl; }
+    else { writefile << "Test 9 Find(Index) | Didn't Find " << Str02->CStr() << " In " << Str01->CStr() << " Starting At Letter, " << 2 << endl; }
 
     //Replace Test
     Str01->Reset_Text();
@@ -100,9 +100,10 @@ void Test() {
     String* Str04 = new String; //String To Be Replaced With
     Str04->Set_Text("a");
 
-    Str01->Replace(*Str03, *Str04);
-    writefile << "Test 10 Replace | Replaced, " << Str03->Text << " With " << Str04->Text << " -> " << Str01->Text << endl;
 
+   // if (Str01->Find(*Str03) == -1) { writefile << "Test 10 Replace | Couldn't Find " << Str03->Text << " In " << Str01->Text << endl; }
+    Str01->Replace(*Str03, *Str04);
+    writefile << "Test 10 Replace | Replaced, " << Str03->Text << " With " << Str04->Text << " -> " << Str01->Text << endl; 
     // == Test
     Str01->Reset_Text();
     if (*Str01 == *Str02) { writefile << "Test 11 == | " << Str01->Text << " And " << Str02->Text << " Are Equal" << endl; }
@@ -119,11 +120,11 @@ void Test() {
     // < Test
     Str01->Reset_Text();
     if (Str01 < Str02) { writefile << "Test 14 < | " << Str01->Text << " Comes Before " << Str02->CStr() << " In The Alphabet" << endl; }
-    else { writefile << "Test 13 [] | " << Str01->CStr() << " Doesn't Come Before " << Str02->CStr() << " In The Alphabet" << endl; }
+    else { writefile << "Test 14 [] | " << Str01->CStr() << " Doesn't Come Before " << Str02->CStr() << " In The Alphabet" << endl; }
 
     // = Test
     Str01 = Str02;
-    writefile << "Test 14 = | " << Str01->CStr() << " Is Now Equal To " << Str02->Text << endl;
+    writefile << "Test 15 = | " << Str01->CStr() << "(Str01) Is Now Equal To " << Str02->Text << "(Str02)" << endl;
 
     //Read From Console Test
     cout << "Read From Console: ";
@@ -134,9 +135,8 @@ void Test() {
     cout << "\nWriting To Console: ";
     Str01->WriteToConsole();
 
-    WriteFile(*File, " ", true);
-    WriteFile(*File, " ", true);
-    WriteFile(*File, " ", true);
+    writefile << "\n\n\n";
+
     writefile.close();
 }
 
