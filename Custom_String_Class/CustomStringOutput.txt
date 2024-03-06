@@ -1,0 +1,43 @@
+6/3/2024   Time: 15:19:9
+6/3/2024   Time: 15:19:29
+Word 1 = hello  Word 2 = world
+Test 1 Length | hello, Has 5 Letters.,
+Test 2 CharacterAt | l, Is In Index 2
+Test 3 EqualTo |  hello Is Not Equal To world
+Test 4 Append | hello world
+Test 5 Prepend | world hello
+Test 6 Uppercase | HELLO
+Test 7 Lowercase | hello
+Test 8 Find | Didn't Find world In hello
+Test 9 Find(Index) | Didn't Find world In hello Starting At Letter, 2
+Test 10 Replace | Replaced, e With a -> hallo
+Test 11 | == hello And world Are Not Equal
+Test 12 != | hello And world Are Not Equal
+Test 13 [] | e Is The Second Letter
+Test 14 < | hello Comes Before world In The Alphabet
+Test 15 = | world(Str01) Is Now Equal To world(Str02)
+Test 15 ReadFromConsole | a
+
+
+
+6/3/2024   Time: 15:19:42
+Word 1 = New  Word 2 = File
+Test 1 Length | New, Has 3 Letters.,
+Test 2 CharacterAt | w, Is In Index 2
+Test 3 EqualTo |  New Is Not Equal To File
+Test 4 Append | New File
+Test 5 Prepend | File New
+Test 6 Uppercase | NEW
+Test 7 Lowercase | new
+Test 8 Find | Didn't Find File In New
+Test 9 Find(Index) | Didn't Find File In New Starting At Letter, 2
+Test 10 Replace | Replaced, e With a -> Naw
+Test 11 | == New And File Are Not Equal
+Test 12 != | New And File Are Not Equal
+Test 13 [] | e Is The Second Letter
+Test 14 < | New Comes Before File In The Alphabet
+Test 15 = | File(Str01) Is Now Equal To File(Str02)
+Test 15 ReadFromConsole | Made
+
+
+
